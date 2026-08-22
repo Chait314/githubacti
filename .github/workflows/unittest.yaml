@@ -1,0 +1,35 @@
+name: Python CI
+#Workflow name
+
+on:   #Events like push or pull, on what branches
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+  
+    steps:
+    # 1: check code from repo
+      - name: Check code
+        uses: actions/checkout@v4
+    
+    # 2: python env
+      - name: Python Environment
+        uses: actions/setup-python 3.10
+        with:
+          python-version: '3.10'
+
+    # 3 Install Dependencies
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+    # 4 Run tests
+      - name: Run tests
+        run: pytest
